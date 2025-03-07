@@ -12,6 +12,11 @@ services:
     ports:
       - "3307:3306"
     restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - currency_converter_network
 
@@ -20,14 +25,15 @@ services:
     image: currency_converter_api:latest
     container_name: currency_converter_api
     environment:
-      DB_URL:  jdbc:mysql://mysql_database:3307/currency_converter
+      DB_URL:  jdbc:mysql://mysql_database:3306/currency_converter
       DB_USER: root
       DB_PASSWORD: admin
     ports:
       - "8080:8080"
     restart: unless-stopped
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     networks:
       - currency_converter_network
 
