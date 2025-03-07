@@ -15,7 +15,7 @@ services:
     networks:
       - currency_converter_network
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "mysql", "-u", "root", "-padmin"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p", "admin"]
       interval: 15s  # Revisa cada 30 segundos
       retries: 5     # Intenta 5 veces antes de marcar como fallido
       start_period: 15s  # Tiempo antes de empezar a comprobar el estado del contenedor
