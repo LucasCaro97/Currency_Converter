@@ -46,10 +46,7 @@ services:
     networks:
       - currency_converter_network
 
-
-
-
-
 networks:
   currency_converter_network:
     driver: bridge
+    name: currency_converter_network
