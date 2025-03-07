@@ -3,7 +3,6 @@ version: '3.8'
 services:
   mysql:
     image: mysql:8.0.33
-    container_name: mysql_database
     environment:
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: currency_converter
@@ -23,7 +22,6 @@ services:
 
   currency_converter_api:
     build: CurrencyConverter
-    container_name: currency_converter_api
     environment:
       DB_URL:  jdbc:mysql://mysql:3306/currency_converter
       DB_USER: root
