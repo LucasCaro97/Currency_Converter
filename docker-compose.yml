@@ -12,11 +12,6 @@ services:
     ports:
       - "3307:3306"
     restart: unless-stopped
-    healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "mysql_database" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
     networks:
       - currency_converter_network
 
@@ -32,8 +27,7 @@ services:
       - "8080:8080"
     restart: unless-stopped
     depends_on:
-      mysql:
-        condition: service_healthy
+      - mysql
     networks:
       - currency_converter_network
 
