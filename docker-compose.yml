@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_database
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: currency_converter
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+    ports:
+      - "3307:3306"
+    restart: unless-stopped
+    networks:
+      - currency_converter_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "mysql", "-u", "root", "-padmin"]
+      interval: 15s  # Revisa cada 30 segundos
+      retries: 5     # Intenta 5 veces antes de marcar como fallido
+      start_period: 15s  # Tiempo antes de empezar a comprobar el estado del contenedor
+      timeout: 10s   # Tiempo máximo de espera para una respuesta
+
+  currency_converter_api:
+    build: CurrencyConverter
+    container_name: currency_converter_api
+    environment:
+      DB_URL:  jdbc:mysql://mysql:3306/currency_converter
+      DB_USER: root
+      DB_PASSWORD: admin
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - currency_converter_network
+
+  currency_converter_front:
+    build: conversor-front-app
+    ports:
+      - "5173:80"
+    environment:
+      VITE_API_URL: "http://currency_converter_api:8080"
+    networks:
+      - currency_converter_network
+
+
+
+
+
+networks:
+  currency_converter_network:
+    driver: bridge

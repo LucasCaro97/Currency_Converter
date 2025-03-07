@@ -1,0 +1,6 @@
+com\converter\CurrencyConverter\controllers\CurrencyController.class
+com\converter\CurrencyConverter\CurrencyConverterApplication.class
+com\converter\CurrencyConverter\Repository\CurrencyRepository.class
+com\converter\CurrencyConverter\services\CurrencyService.class
+com\converter\CurrencyConverter\Config\CorsConfig.class
+com\converter\CurrencyConverter\models\Currency.class
