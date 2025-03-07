@@ -20,7 +20,7 @@ services:
     image: currency_converter_api:latest
     container_name: currency_converter_api
     environment:
-      DB_URL:  jdbc:mysql://mysql:3306/currency_converter
+      DB_URL:  jdbc:mysql://mysql_database:3306/currency_converter
       DB_USER: root
       DB_PASSWORD: admin
     ports:
