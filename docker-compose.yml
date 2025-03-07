@@ -13,7 +13,7 @@ services:
       - "3307:3306"
     restart: unless-stopped
     healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "mysql_database" ]
       interval: 10s
       timeout: 5s
       retries: 5
