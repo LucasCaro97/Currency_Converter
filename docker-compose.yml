@@ -14,6 +14,14 @@ services:
     restart: unless-stopped
     networks:
       - currency_converter_network
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p", "admin"]
+      interval: 20s                     #Tiempo entre cada chequeo
+      retries: 20                       #Numero de intentos antes de marcarlo como unhealth
+      start_period: 60s                 #Tiempo inicial antes de que empiecen los chequeos
+      timeout: 5s                       #Maximo tiempo qe se espera antes de fallar un chequeo
 
   currency_converter_api:
     build: CurrencyConverter
@@ -27,9 +35,11 @@ services:
       - "8080:8080"
     restart: unless-stopped
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     networks:
       - currency_converter_network
+
 
   currency_converter_front:
     build: conversor-front-app
@@ -46,3 +56,7 @@ networks:
   currency_converter_network:
     driver: bridge
     name: currency_converter_network
+
+volumes:
+  mysql_data:
+    name: mysql_data
