@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  currency_converter_front:
+    build: conversor-front-app
+    image: conversor-front-app:latest
+    container_name: currency_converter_front
+    ports:
+      - "5173:80"
+    environment:
+      VITE_API_URL: "http://currency_converter_api:8080"
+    networks:
+      - currency_converter_network
+
+networks:
+  currency_converter_network:
+    external: true

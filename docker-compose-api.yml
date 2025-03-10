@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  currency_converter_api:
+    build: CurrencyConverter
+    image: currency_converter_api:latest
+    container_name: currency_converter_api
+    environment:
+      DB_URL:  jdbc:mysql://mysql_database:3306/currency_converter
+      DB_USER: root
+      DB_PASSWORD: admin
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    networks:
+      - currency_converter_network
+
+networks:
+  currency_converter_network:
+    external: true
