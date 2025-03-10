@@ -16,6 +16,7 @@ export default function SelectCurrency({textLabel, className, onSelect}) {
   useEffect( () => {
     const getAllCurrencies  = async () => {
       try{
+        console.log(`${apiUrl}/currency/getAll`)
         const respuesta = await axios.get(`${apiUrl}/currency/getAll`);    
         const datos = await respuesta.data;
         setCurrencies(datos);
